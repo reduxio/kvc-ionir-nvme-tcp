@@ -84,6 +84,10 @@ is_kmod_loaded() {
 
 build_kmods() {
     # Check to see if it's already built
+
+    echo ilan
+    kvc_c_images $IMAGE
+    echo ovadia
     if [ ! -z "$(kvc_c_images $IMAGE --quiet 2>/dev/null)" ]; then
         echo "The ${IMAGE} kernel module container is already built"
     else
@@ -98,6 +102,8 @@ build_kmods() {
         # Note the tr to delete the trailing carriage return
         x=$(kvc_c_run $IMAGE modinfo -F version "/lib/modules/${KVC_KVER}/${module}.ko" | \
                                                                             tr -d '\r')
+
+        x="dd1a7d4"
         if [ "${x}" != "${KMOD_SOFTWARE_VERSION}" ]; then
             echo "Module version mismatch within container. rebuilding ${IMAGE}"
             build_kmod_container
