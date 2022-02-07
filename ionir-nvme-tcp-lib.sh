@@ -136,6 +136,11 @@ load_kmods() {
             modprobe ${module}
         fi
     done
+    echo "Put the original nvme-tcp module in blacklist"
+    echo "blacklist nvme-tcp" > /host/etc/modprobe.d/blacklist-nvme-tcp.conf
+    echo "install nvme-tcp /bin/false" >> /host/etc/modprobe.d/blacklist-nvme-tcp.conf
+    echo "Unload the original nvme-tcp, if loaded"
+    modprobe -r nvme-tcp
 }
 
 unload_kmods() {
@@ -148,6 +153,8 @@ unload_kmods() {
             echo "Kernel module ${module} already unloaded"
         fi
     done
+    echo "Remove the original nvme-tcp module from blacklist"
+    rm /host/etc/modprobe.d/blacklist-nvme-tcp.conf
 }
 
 wrapper() {
