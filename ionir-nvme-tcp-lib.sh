@@ -84,11 +84,9 @@ is_kmod_loaded() {
 
 build_kmods() {
 
-    echo ilan ovadia
     if [ $(kvc_c_env) == "kubernetes" ]; then
         return 0
     fi
-    echo ilan ovadia - build ...
 
     # Check to see if it's already built
     if [ ! -z "$(kvc_c_images $IMAGE --quiet 2>/dev/null)" ]; then
